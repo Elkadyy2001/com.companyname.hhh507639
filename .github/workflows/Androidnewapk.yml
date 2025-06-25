@@ -16,7 +16,19 @@ jobs:
       run: |
           git branch --show-current
           cat ./test.txt
+          
+    - name: Install certificate
+      run: |
+          security create-keychain -p "" build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "" build.keychain
+          security import './Certificatesaaq.p12' -k build.keychain -P "200120080" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
 
+    - name: Install provisioning profile
+      run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp 'publishmarre.mobileprovision' ~/Library/MobileDevice/Provisioning\ Profiles/
 
 
     
