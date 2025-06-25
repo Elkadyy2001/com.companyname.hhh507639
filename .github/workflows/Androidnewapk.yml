@@ -9,6 +9,11 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+          ref: newbranch  # hardcoded target branch
+
+    - name: Show current branch
+      run: git branch --show-current
 
 
     - uses: actions/setup-dotnet@v4
